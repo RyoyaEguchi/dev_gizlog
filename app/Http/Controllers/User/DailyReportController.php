@@ -12,8 +12,8 @@ class DailyReportController extends Controller
         return view('user.daily_report.index');
     }
 
-    // public function create()
-    // {
-    //     return view('user.daily_report.create');
-    // }
+    public function create()
+    {
+        return view('user.daily_report.create');
+    }
 }
