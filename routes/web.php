@@ -53,6 +53,8 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::get('daily_report', ['as' => 'daily_report.index', 'uses' => 'DailyReportController@index']);
     // 日報作成
     Route::get('daily_report/create', ['as' => 'daily_report.create', 'uses' => 'DailyReportController@create']);
+    // 日報詳細
+    Route::get('daily_report/show', ['as' => 'daily_report.show', 'uses' => 'DailyReportController@show']);
     // 日報保存
     Route::post('daily_report', ['as' => 'daily_report.store', 'uses' => 'DailyReportController@store']);
     // 日報編集
