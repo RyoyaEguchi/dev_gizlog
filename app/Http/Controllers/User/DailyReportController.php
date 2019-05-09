@@ -39,9 +39,10 @@ class DailyReportController extends Controller
         return view('user.daily_report.create');
     }
 
-    public function show()
+    public function show($DailyReportId)
     {
-        return view('user.daily_report.show');
+        $report = $this->daily_report->find($DailyReportId);
+        return view('user.daily_report.show', compact('report'));
     }
 
     public function store(DailyReportRequest $request)
