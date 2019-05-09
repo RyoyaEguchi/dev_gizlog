@@ -51,11 +51,14 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     //------------------- 日報 -------------------
     // 日報一覧
     Route::get('daily_report', ['as' => 'daily_report.index', 'uses' => 'DailyReportController@index']);
-    //日報作成
+    // 日報作成
     Route::get('daily_report/create', ['as' => 'daily_report.create', 'uses' => 'DailyReportController@create']);
     // 日報保存
     Route::post('daily_report', ['as' => 'daily_report.store', 'uses' => 'DailyReportController@store']);
-
+    // 日報編集
+    Route::get('daily_report/edit/{DailyReportId}', ['as' => 'daily_report.edit', 'uses' => 'DailyReportController@edit']);
+    // 日報編集保存
+    Route::post('daily_report/update/{DailyReportId}', ['as' => 'daily_report.update', 'uses' => 'DailyReportController@update']);
 });
 
 

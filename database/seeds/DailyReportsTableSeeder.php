@@ -13,7 +13,7 @@ class DailyReportsTableSeeder extends Seeder
     {
         DB::table('daily_reports')->truncate();
         DB::table('daily_reports')->insert([
-            'user_id' => 1,
+            'user_id' => 2,
             'title' => 'テストタイトル',
             'contents' => 'seederによる初期値です',
             'reporting_time' => '2000-11-23',

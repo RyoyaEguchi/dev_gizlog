@@ -21,16 +21,23 @@
         </tr>
       </thead>
       <tbody>
+      @if (isset($reports))
       @foreach ($reports as $report)
         <tr class="row">
-          <td class="col-xs-2">{{ $report->reporting_time }}</td>
-          <td class="col-xs-3"><{{ $report->title }}/td>
+          <td class="col-xs-2">{{ date('m/d (D)',  strtotime($report->reporting_time)) }}</td>
+          <td class="col-xs-3">{{ $report->title }}</td>
           <td class="col-xs-5">{{ $report->contents }}</td>
-          <td class="col-xs-2"><a class="btn" href=""><i class="fa fa-book"></i></a></td>
+          <td class="col-xs-2"><a class="btn" href="{{ route('daily_report.edit', $report->id) }}"><i class="fa fa-book"></i></a></td>
         </tr>
-      @endforeach
+        @endforeach
+        @endif
       </tbody>
     </table>
+    @if (!isset($reports))
+    <div class="text-danger">
+      <p>日報がありません。</p>
+    </div>
+    @endif
   </div>
 </div>
 

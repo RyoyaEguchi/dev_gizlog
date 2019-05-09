@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\DailyReport;
 use App\Http\Requests\User\DailyReportRequest;
+use Illuminate\Support\Facades\Auth;
 
 class DailyReportController extends Controller
 {
@@ -19,9 +20,12 @@ class DailyReportController extends Controller
 
     public function index()
     {
-        $reports = $this->daily_report->latest('reporting_time')->get();
-
-        return view('user.daily_report.index', compact('reports'));
+        if(!is_null($this->daily_report)) {
+            $reports = $this->daily_report->where('user_id', '=', Auth::user()->id)->latest('reporting_time')->get();
+            return view('user.daily_report.index', compact('reports'));
+        } else {
+            return view('user.daily_report.index');
+        }
     }
 
     public function create()
@@ -32,6 +36,19 @@ class DailyReportController extends Controller
     public function store(DailyReportRequest $request)
     {
         $this->daily_report->create($request->validated());
+        return redirect()->route('daily_report.index');
+    }
+
+    public function edit($DailyReportId)
+    {
+        $report = $this->daily_report->find($DailyReportId);
+        return view('user.daily_report.edit', compact('report'));
+    }
+
+    public function update(DailyReportRequest $request, $DailyReportId)
+    {
+        $input = $request->all();
+        $this->daily_report->find($DailyReportId)->fill($request->validated())->save();
         return redirect()->route('daily_report.index');
     }
 }
