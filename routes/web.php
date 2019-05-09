@@ -46,12 +46,16 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::post('question/{id}/confirm', ['as' => 'confirm.update', 'uses' => 'QuestionController@confirm']);
     Route::post('question/{id}/comment', ['as' => 'question.comment', 'uses' => 'QuestionController@storeComment']);
     Route::resource('question', QuestionController::class);
+    
 
     //------------------- 日報 -------------------
     // 日報一覧
     Route::get('daily_report', ['as' => 'daily_report.index', 'uses' => 'DailyReportController@index']);
-    // //日報作成
+    //日報作成
     Route::get('daily_report/create', ['as' => 'daily_report.create', 'uses' => 'DailyReportController@create']);
+    // 日報保存
+    Route::post('daily_report', ['as' => 'daily_report.store', 'uses' => 'DailyReportController@store']);
+
 });
 
 
