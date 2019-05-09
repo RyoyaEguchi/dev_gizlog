@@ -16,9 +16,12 @@ class DailyReportController extends Controller
 
         $this->daily_report = $instanceClass;
     }
+
     public function index()
     {
-        return view('user.daily_report.index');
+        $reports = $this->daily_report->latest('reporting_time')->get();
+
+        return view('user.daily_report.index', compact('reports'));
     }
 
     public function create()
