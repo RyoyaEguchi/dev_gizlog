@@ -63,4 +63,12 @@ class DailyReportController extends Controller
         $this->daily_report->find($DailyReportId)->fill($request->validated())->save();
         return redirect()->route('daily_report.index');
     }
+
+    public function delete($DailyReportId)
+    {
+        // dd($this->daily_report->find($DailyReportId));
+        $report = $this->daily_report->find($DailyReportId);
+        $report->delete();
+        return redirect()->route('daily_report.index');
+    }
 }
