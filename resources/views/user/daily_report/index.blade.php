@@ -34,8 +34,8 @@
           <td class="col-xs-5">{{ $report->contents }}</td>
           <td class="col-xs-2"><a class="btn" href="{{ route('daily_report.show', $report->id) }}"><i class="fa fa-book"></i></a></td>
         </tr>
-        @endforeach
-        @endif
+      @endforeach
+      @endif
       </tbody>
     </table>
     @if (!isset($reports) || empty($reports->all()))
