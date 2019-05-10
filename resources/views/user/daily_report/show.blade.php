@@ -25,10 +25,13 @@
   <div class="btn-bottom-wrapper">
     <a class="btn btn-edit" href="{{ route('daily_report.edit', $report->id) }}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
     <div class="btn-delete">
-      <form action="{{ route('daily_report.delete', $report->id) }}" method="post">
+      {!! Form::open(['route' => ['daily_report.delete', $report->id], 'method' => 'delete']) !!}
+        {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
+      {!! Form::close() !!}
+      {{-- <form action="{{ route('daily_report.delete', $report->id) }}" method="post">
         @csrf
         <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i></button>
-      </form>
+      </form> --}}
     </div>
   </div>
 </div>

@@ -60,9 +60,9 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     // 日報編集
     Route::get('daily_report/edit/{DailyReportId}', ['as' => 'daily_report.edit', 'uses' => 'DailyReportController@edit']);
     // 日報編集保存
-    Route::post('daily_report/update/{DailyReportId}', ['as' => 'daily_report.update', 'uses' => 'DailyReportController@update']);
+    Route::patch('daily_report/update/{DailyReportId}', ['as' => 'daily_report.update', 'uses' => 'DailyReportController@update']);
     // 日報削除
-    Route::post('daily_report/delete/{DailyReportId}', ['as' => 'daily_report.delete', 'uses' => 'DailyReportController@delete']);
+    Route::delete('daily_report/delete/{DailyReportId}', ['as' => 'daily_report.delete', 'uses' => 'DailyReportController@delete']);
 });
 
 

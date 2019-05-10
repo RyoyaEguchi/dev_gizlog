@@ -4,11 +4,15 @@
 <h2 class="brand-header">日報一覧</h2>
 <div class="main-wrap">
   <div class="btn-wrapper daily-report">
-  <form>
+  {!! Form::open(['method' => 'get']) !!}
+    {!! Form::month('search-month', null, ['class' => 'form-control']) !!}
+    {!! Form::button('<i class="fa fa-search"></i>', ['type' => 'submit', 'class' => 'btn btn-icon']) !!}
+  {!! Form::close() !!}
+  {{-- <form>
     @csrf
     <input class="form-control" name="search-month" type="month">
     <button type="submit" class="btn btn-icon"><i class="fa fa-search"></i></button>
-  </form>
+  </form> --}}
     <a class="btn btn-icon" href="{{ route('daily_report.create') }}"><i class="fa fa-plus"></i></a>
   </div>
   <div class="content-wrapper table-responsive">
