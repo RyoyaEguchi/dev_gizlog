@@ -59,8 +59,7 @@ class DailyReportController extends Controller
 
     public function update(DailyReportRequest $request, $DailyReportId)
     {
-        $input = $request->all();
-        $this->daily_report->find($DailyReportId)->fill($request)->save();
+        $this->daily_report->find($DailyReportId)->fill($request->all())->save();
         return redirect()->route('daily_report.index');
     }
 
