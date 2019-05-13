@@ -28,10 +28,6 @@
       {!! Form::open(['route' => ['daily_report.delete', $report->id], 'method' => 'delete']) !!}
         {!! Form::button('<i class="fa fa-trash-o"></i>', ['type' => 'submit', 'class' => 'btn btn-danger']) !!}
       {!! Form::close() !!}
-      {{-- <form action="{{ route('daily_report.delete', $report->id) }}" method="post">
-        @csrf
-        <button class="btn btn-danger" type="submit"><i class="fa fa-trash-o"></i></button>
-      </form> --}}
     </div>
   </div>
 </div>

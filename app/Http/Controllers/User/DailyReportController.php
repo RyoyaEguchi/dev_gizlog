@@ -47,7 +47,7 @@ class DailyReportController extends Controller
 
     public function store(DailyReportRequest $request)
     {
-        $this->daily_report->create($request->validated());
+        $this->daily_report->create($request->all());
         return redirect()->route('daily_report.index');
     }
 
@@ -60,14 +60,13 @@ class DailyReportController extends Controller
     public function update(DailyReportRequest $request, $DailyReportId)
     {
         $input = $request->all();
-        $this->daily_report->find($DailyReportId)->fill($request->validated())->save();
+        $this->daily_report->find($DailyReportId)->fill($request)->save();
         return redirect()->route('daily_report.index');
     }
 
     public function delete($DailyReportId)
     {
-        $report = $this->daily_report->find($DailyReportId);
-        $report->delete();
+        $report = $this->daily_report->find($DailyReportId)->delete();
         return redirect()->route('daily_report.index');
     }
 }
