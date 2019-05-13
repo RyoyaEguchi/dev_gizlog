@@ -47,21 +47,12 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
     Route::post('question/{id}/comment', ['as' => 'question.comment', 'uses' => 'QuestionController@storeComment']);
     Route::resource('question', QuestionController::class);
     
-
-    //------------------- 日報 -------------------
-    // 日報一覧
     Route::get('daily_report', ['as' => 'daily_report.index', 'uses' => 'DailyReportController@index']);
-    // 日報作成
     Route::get('daily_report/create', ['as' => 'daily_report.create', 'uses' => 'DailyReportController@create']);
-    // 日報詳細
     Route::get('daily_report/show/{DailyReportId}', ['as' => 'daily_report.show', 'uses' => 'DailyReportController@show']);
-    // 日報保存
     Route::post('daily_report', ['as' => 'daily_report.store', 'uses' => 'DailyReportController@store']);
-    // 日報編集
     Route::get('daily_report/edit/{DailyReportId}', ['as' => 'daily_report.edit', 'uses' => 'DailyReportController@edit']);
-    // 日報編集保存
     Route::patch('daily_report/update/{DailyReportId}', ['as' => 'daily_report.update', 'uses' => 'DailyReportController@update']);
-    // 日報削除
     Route::delete('daily_report/delete/{DailyReportId}', ['as' => 'daily_report.delete', 'uses' => 'DailyReportController@delete']);
 });
 

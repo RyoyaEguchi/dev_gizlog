@@ -26,7 +26,9 @@ class DailyReportController extends Controller
                 $date = new Carbon($request->query('search-month'));
                 $reports = $this->daily_report->fetchSearchingDailyReports($date);
             } else {
-                $reports = $this->daily_report->where('user_id', Auth::id())->latest('reporting_time')->get();
+                $reports = $this->daily_report->where('user_id', Auth::id())
+                                              ->latest('reporting_time')
+                                              ->get();
             }
         }
         return view('user.daily_report.index', compact('reports'));
