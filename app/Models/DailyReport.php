@@ -29,4 +29,11 @@ class DailyReport extends Model
                     ->latest('reporting_time')
                     ->get();
     }
+
+    public function fetchDailyReports()
+    {
+        return $this->where('user_id', Auth::id())
+                    ->latest('reporting_time')
+                    ->get();
+    }
 }
