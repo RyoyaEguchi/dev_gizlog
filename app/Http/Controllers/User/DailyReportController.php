@@ -25,13 +25,10 @@ class DailyReportController extends Controller
         if(!is_null($this->daily_report) && !is_null($request->query('search-month'))) {
             $date = new Carbon($request->query('search-month'));
             $reports = $this->daily_report->where('user_id', '=', Auth::user()->id)->whereYear('reporting_time', '=', $date->year)->whereMonth('reporting_time', '=', $date->month)->latest('reporting_time')->get();
-            return view('user.daily_report.index', compact('reports'));
         } else if(!is_null($this->daily_report)) {
             $reports = $this->daily_report->where('user_id', '=', Auth::user()->id)->latest('reporting_time')->get();
-            return view('user.daily_report.index', compact('reports'));
-        } else {
-            return view('user.daily_report.index');
         }
+        return view('user.daily_report.index', compact('reports'));
     }
 
     public function create()
