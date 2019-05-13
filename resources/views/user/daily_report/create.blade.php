@@ -5,7 +5,7 @@
 <div class="main-wrap">
   <div class="container">
     {!! Form::open(['route' => ['daily_report.index'], 'method' => 'POST']) !!}
-      {!! Form::hidden('user_id', Auth::user()->id, ['class' => 'form-control']) !!}
+      {!! Form::hidden('user_id', Auth::id(), ['class' => 'form-control']) !!}
       <div class="form-group form-size-small {{ $errors->has('reporting_time') ? 'has-error text-danger' : '' }}">
         {!! Form::date('reporting_time', old('reporting_time') ? : Carbon::now(), ['class' => 'form-control']) !!}
         <span class="help-block">

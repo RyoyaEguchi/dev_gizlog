@@ -5,7 +5,7 @@
 <div class="main-wrap">
   <div class="container">
     {!! Form::open(['route' => ['daily_report.update', $report->id], 'method' => 'PATCH']) !!}
-      {!! Form::hidden('user_id', Auth::user()->id, ['class' => 'form-control']) !!}
+      {!! Form::hidden('user_id', Auth::id(), ['class' => 'form-control']) !!}
       <div class="form-group form-size-small {{ $errors->has('reporting_time') ? 'has-error text-danger':'' }}">
         {!! Form::date('reporting_time', old('reporting_time') ? : $report->reporting_time, ['class' => 'form-control $errors->has("reporting_time") ? "has-error text-danger" : ""']) !!}
         <span class="help-block">

@@ -12,6 +12,7 @@ trait SearchingScope
      */
     public function scopeFilterEqual($query, $columnName, $conditionValue)
     {
+        dd($conditionValue);
         if (!empty($conditionValue)) {
             $query->where($columnName, $conditionValue);
         }
