@@ -31,13 +31,19 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $questions = $this->question->all();
-        $tags = $this->tag->pluck('name', 'id');
+        if ($request->tag_category_id === '0') {
+            $questions = $this->question->all();
+        } elseif (!is_null($request->tag_category_id)) {
+            $questions = $this->question->where('tag_category_id', $request->tag_category_id)->get();
+        } elseif (!is_null($request->search_word)) {
+            $questions = $this->question->where('title', 'like', "%$request->search_word%")->get();
+        }
+        $tags = $this->tag->all();
         $comments = $this->comment->all();
         $avatar = $this->user->pluck('avatar', 'id');
-        // dd($users);
+        
         return view('user.question.index', compact('questions', 'tags', 'comments', 'avatar'));
     }
 
