@@ -7,16 +7,23 @@ use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\TagCategory;
 use App\Http\Requests\User\QuestionsRequest;
+use App\Models\Comment;
+use App\Models\User;
 
 class QuestionController extends Controller
 {
     protected $question;
     protected $tag;
-    public function __construct(Question $question, TagCategory $tag)
+    protected $comment;
+    protected $user;
+
+    public function __construct(Question $question, TagCategory $tag, Comment $comment, User $user)
     {
         $this->middleware('auth');
         $this->question = $question; 
         $this->tag = $tag;
+        $this->comment = $comment;
+        $this->user = $user;
     }
 
     /**
@@ -26,7 +33,12 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        return view('user.question.index');
+        $questions = $this->question->all();
+        $tags = $this->tag->pluck('name', 'id');
+        $comments = $this->comment->all();
+        $avatar = $this->user->pluck('avatar', 'id');
+        // dd($users);
+        return view('user.question.index', compact('questions', 'tags', 'comments', 'avatar'));
     }
 
     /**
@@ -37,7 +49,7 @@ class QuestionController extends Controller
     public function create()
     {
         $tags = $this->tag->pluck('name', 'id');
-        // dd($tags);   
+        
         return view('user.question.create', compact('tags'));
     }
 

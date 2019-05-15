@@ -15,7 +15,7 @@ class QuestionsTableSeeder extends Seeder
         DB::table('questions')->truncate();
         DB::table('questions')->insert([
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'tag_category_id' => 1,
                 'title' => 'テストタイトル',
                 'content' => 'テストコンテンツ',
@@ -23,7 +23,7 @@ class QuestionsTableSeeder extends Seeder
                 'updated_at' => Carbon::now()
             ],
             [
-                'user_id' => 1,
+                'user_id' => 2,
                 'tag_category_id' => 2,
                 'title' => 'テストタイトル2',
                 'content' => 'テストコンテンツ2',
