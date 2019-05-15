@@ -5,17 +5,17 @@
 <div class="main-wrap">
   <div class="container">
     {!! Form::open(['route' => 'question.store', 'method' => 'post']) !!}
-      <div class="form-group">
-        {!! Form::select('tag_category_id', [], 'Select Category', ['class' => 'form-control selectpicker form-size-small']) !!}
-        <span class="help-block"></span>
+    <div class="form-group {{ $errors->first('tag_category_id') ? 'has-error' : '' }}">
+        {!! Form::select('tag_category_id', $tags, old('tag_cagetory_id'), ['placeholder' => 'Select Category', 'class' => 'form-control selectpicker form-size-small']) !!}
+        <span class="help-block">{{ $errors->first('tag_category_id') }}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group {{ $errors->first('title') ? 'has-error' : '' }}">
         {!! Form::text('title', old('title'), ['placeholder' => 'title', 'class' => 'form-control']) !!}
-        <span class="help-block"></span>
+      <span class="help-block">{{ $errors->first('title') }}</span>
       </div>
-      <div class="form-group">
+      <div class="form-group {{ $errors->first('title') ? 'has-error' : '' }}">
         {!! Form::textarea('content', old('title'), ['placeholder' => 'Please write down your question here...', 'class' => 'form-control']) !!}
-        <span class="help-block"></span>
+        <span class="help-block">{{ $errors->first('content') }}</span>
       </div>
       {!! Form::submit('CREATE', ['class' => 'btn btn-success pull-right']) !!}
     {!! Form::close() !!}

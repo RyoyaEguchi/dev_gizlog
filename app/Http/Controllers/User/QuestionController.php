@@ -4,9 +4,21 @@ namespace App\Http\Controllers\User;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Question;
+use App\Models\TagCategory;
+use App\Http\Requests\User\QuestionsRequest;
 
 class QuestionController extends Controller
 {
+    protected $question;
+    protected $tag;
+    public function __construct(Question $question, TagCategory $tag)
+    {
+        $this->middleware('auth');
+        $this->question = $question; 
+        $this->tag = $tag;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +36,9 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('user.question.create');
+        $tags = $this->tag->pluck('name', 'id');
+        // dd($tags);   
+        return view('user.question.create', compact('tags'));
     }
 
     /**
@@ -33,9 +47,9 @@ class QuestionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(QuestionsRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**
