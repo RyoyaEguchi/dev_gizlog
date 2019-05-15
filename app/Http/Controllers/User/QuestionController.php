@@ -49,7 +49,9 @@ class QuestionController extends Controller
      */
     public function store(QuestionsRequest $request)
     {
-        dd($request);
+        $this->question->create($request->all());
+
+        return redirect()->route('question.index');
     }
 
     /**
