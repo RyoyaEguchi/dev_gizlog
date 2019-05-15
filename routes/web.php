@@ -42,6 +42,8 @@ Route::group(['prefix' => '/', 'user.', 'namespace' => 'User'], function () {
 
     Route::resource('report', DailyReportController::class);
 
+    Route::resource('question', QuestionController::class);
+
 });
 
 
