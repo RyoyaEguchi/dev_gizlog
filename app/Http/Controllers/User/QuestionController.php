@@ -37,7 +37,7 @@ class QuestionController extends Controller
         if ($request->tag_category_id === '0') {
             $questions = $this->question->all();
         } elseif (!is_null($request->tag_category_id)) {
-            $questions = $this->question->where('tag_category_id', $request->tag_category_id)->get();
+            $questions = $this->question->where('tag_category_id', $this->tag->where('name', $request->tag_category_id)->pluck('id'))->get();
         } elseif (!is_null($request->search_word)) {
             $questions = $this->question->where('title', 'like', "%$request->search_word%")->get();
         } else {
@@ -136,5 +136,10 @@ class QuestionController extends Controller
         $this->comment->create($comment->all());
 
         return redirect()->route('question.show', $comment->question_id);
+    }
+
+    public function mypage()
+    {
+        return view('user.question.mypage');
     }
 }

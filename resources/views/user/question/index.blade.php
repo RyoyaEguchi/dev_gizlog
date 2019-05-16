@@ -10,14 +10,14 @@
         <button type="submit" class="search-icon" method="post"><i class="fa fa-search" aria-hidden="true"></i></button>
       </div>
       <a class="btn" href="{{ route('question.create') }}"><i class="fa fa-plus" aria-hidden="true"></i></a>
-      <a class="btn" href="">
+      <a class="btn" href="{{ route('question.mypage', Auth::id() }}">
         <i class="fa fa-user" aria-hidden="true"></i>
       </a>
     </div>
     <div class="category-wrap">
       <div class="btn all" id="0">all</div>
       @foreach ($tags as $tag)
-        <div class="btn {{ $tag->name }}" id="{{ $tag->id }}">{{ $tag->name }}</div>
+        <div class="btn {{ $tag->name }}" id="{{ $tag->name }}">{{ $tag->name }}</div>
       @endforeach
       <input id="category-val" name="tag_category_id" type="hidden" value="">
     </div>
