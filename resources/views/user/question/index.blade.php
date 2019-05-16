@@ -39,9 +39,9 @@
             <td class="col-xs-1"><img src="{{ $avatar[$question->user_id] }}" class="avatar-img"></td>
             <td class="col-xs-2">{{ $tags->find($question->tag_category_id)->name }}</td>
             <td class="col-xs-6">{{ $question->title }}</td>
-            <td class="col-xs-1">{{ $comments->where('question_id', $question->id)->count() }} </td>
+            <td class="col-xs-1">{{ $comments->where('question_id', $question->id)->count() }}</td>
             <td class="col-xs-2">
-                <a class="btn btn-success" href="{{ route('question.edit', $question->id) }}">
+                <a class="btn btn-success" href="{{ route('question.show', $question->id) }}">
                   <i class="fa fa-comments-o" aria-hidden="true"></i>
                 </a>
               </td>

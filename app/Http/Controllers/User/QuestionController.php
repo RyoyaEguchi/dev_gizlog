@@ -9,6 +9,7 @@ use App\Models\TagCategory;
 use App\Http\Requests\User\QuestionsRequest;
 use App\Models\Comment;
 use App\Models\User;
+use App\Http\Requests\User\CommentRequest;
 
 class QuestionController extends Controller
 {
@@ -39,6 +40,8 @@ class QuestionController extends Controller
             $questions = $this->question->where('tag_category_id', $request->tag_category_id)->get();
         } elseif (!is_null($request->search_word)) {
             $questions = $this->question->where('title', 'like', "%$request->search_word%")->get();
+        } else {
+            $questions = $this->question->all();
         }
         $tags = $this->tag->all();
         $comments = $this->comment->all();
@@ -80,7 +83,18 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        //
+        $question = $this->question->find($id);
+        $questionUser = $this->user->find($question->user_id);
+        $tag = $this->tag->find($question->tag_category_id);
+
+        $comments = $this->comment->where('question_id', $question->id)->get();
+        
+        $users = $this->user->all();
+        // foreach ($comments as $comment) {
+        //     $commentUsers .= $this->user->where('id', $comment->user_id)->get();
+        // }
+        
+        return view('user.question.show', compact('question', 'questionUser', 'tag', 'comments', 'users'));
     }
 
     /**
@@ -115,5 +129,12 @@ class QuestionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function storeComment(CommentRequest $comment)
+    {
+        $this->comment->create($comment->all());
+
+        return redirect()->route('question.show', $comment->question_id);
     }
 }

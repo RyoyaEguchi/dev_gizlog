@@ -28,6 +28,19 @@ class CommentsTableSeeder extends Seeder
                 'comment' => 'テストコメント2',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
+            ],            [
+                'user_id' => 2,
+                'question_id' => 2,
+                'comment' => 'テストコメント3',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ],
+            [
+                'user_id' => 2,
+                'question_id' => 2,
+                'comment' => 'テストコメント4',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]
         ]);
     }
