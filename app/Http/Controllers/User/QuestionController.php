@@ -33,9 +33,9 @@ class QuestionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $searchRequest)
     {
-        $questions = $this->question->fetchQuestions($request);
+        $questions = $this->question->fetchQuestions($searchRequest);
         $tags = $this->tag->fetchAllTags();
         
         return view('user.question.index', compact('questions', 'tags'));
@@ -76,7 +76,7 @@ class QuestionController extends Controller
     {
         $question = $this->question->fetchDetailesQuestion($question_id);
         $comments = $this->comment->fetchQuestionComments($question_id);
-        // dd($question);
+        
         return view('user.question.show', compact('question', 'comments'));
     }
 
@@ -121,11 +121,11 @@ class QuestionController extends Controller
         return redirect()->route('question.mypage', Auth::id());
     }
 
-    public function storeComment(CommentRequest $comment)
+    public function storeComment(CommentRequest $request)
     {
-        $this->comment->createComment($comment);
+        $this->comment->createComment($request);
 
-        return redirect()->route('question.show', $comment->question_id);
+        return redirect()->route('question.show', $request->question_id);
     }
 
     public function showMypage($auth_id)

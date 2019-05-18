@@ -36,14 +36,14 @@ class Question extends Model
         return $this->find($question_id);
     }
 
-    public function fetchQuestions($request)
+    public function fetchQuestions($searchRequest)
     {
-        if ($request->tag_category_id === '0') {
+        if ($searchRequest->tag_category_id === '0') {
             return $this->fetchAllQuestions();
-        } elseif (!is_null($request->tag_category_id)) {
-            return $this->fetchSearchByTag($request);
-        } elseif (!is_null($request->search_word)) {
-            return $this->fetchSearchByWord($request);
+        } elseif (!is_null($searchRequest->tag_category_id)) {
+            return $this->fetchSearchByTag($searchRequest);
+        } elseif (!is_null($searchRequest->search_word)) {
+            return $this->fetchSearchByWord($searchRequest);
         } else {
             return $this->fetchAllQuestions();
         }
@@ -83,6 +83,12 @@ class Question extends Model
                     ->get();
     }
 
+    public function fetchDetailesQuestion($question_id)
+    {
+        return $this->with(['tagCategory', 'user'])->find($question_id);
+        
+    }
+
     public function createQuestion($request)
     {
         return $this->create($request->all());
@@ -96,12 +102,6 @@ class Question extends Model
     public function destroyQuestion($question_id)
     {
         return $this->find($question_id)->delete();
-    }
-
-    public function fetchDetailesQuestion($question_id)
-    {
-        return $this->with(['tagCategory', 'user'])->find($question_id);
-        
     }
 }
 

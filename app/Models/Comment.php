@@ -23,9 +23,9 @@ class Comment extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function createComment($comment)
+    public function createComment($request)
     {
-        $this->create($comment->all());
+        $this->create($request->all());
     }
 
     public function fetchQuestionComments($id)
