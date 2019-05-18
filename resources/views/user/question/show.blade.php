@@ -5,8 +5,8 @@
 <div class="main-wrap">
   <div class="panel panel-success">
     <div class="panel-heading">
-      <img src="" class="avatar-img">
-      <p>{{ $questionUser->name }} さんの質問&nbsp;&nbsp;( {{ $tag->name }} )</p>
+      <img src="{{ $question->user->avatar }}" class="avatar-img">
+      <p>{{ $question->user->name }} さんの質問&nbsp;&nbsp;( {{ $question->tagCategory->name }} )</p>
       <p class="question-date">{{ $question->updated_at }}</p>
     </div>
     <div class="table-responsive">
@@ -28,8 +28,8 @@
     <div class="comment-list">
         <div class="comment-wrap">
           <div class="comment-title">
-            <img src="{{ $users->find($comment->user_id)->avatar }}" class="avatar-img">
-            <p>{{ $users->find($comment->user_id)->name }}</p>
+            <img src="{{ $comment->user->avatar }}" class="avatar-img">
+            <p>{{ $comment->user->name }}</p>
             <p class="comment-date">{{ $comment->updated_at }}</p>
           </div>
           <div class="comment-body">{{ $comment->comment }}</div>
@@ -41,11 +41,11 @@
       {!! Form::hidden('user_id', Auth::id()) !!}
       {!! Form::hidden('question_id', $question->id) !!}
       <div class="comment-title">
-        <img src="{{ $users->find(Auth::id())->avatar }}" class="avatar-img"><p>コメントを投稿する</p>
+        <img src="{{ $question->avator }}" class="avatar-img"><p>コメントを投稿する</p>
       </div>
-      <div class="comment-body">
+      <div class="comment-body {{ $errors->has('comment') ? 'has-error' : '' }}">
       {!! Form::textarea('comment', '',['class' => 'form-control', 'placeholder' => 'Add your comment...', 'cols' => '50', 'rows' => '10']) !!}
-      <span class="help-block"></span>
+      <span class="help-block">{{ $errors->first('comment') }}</span>
     </div>
     <div class="comment-bottom">
       <button type="submit" class="btn btn-success">

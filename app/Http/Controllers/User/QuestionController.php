@@ -10,6 +10,7 @@ use App\Http\Requests\User\QuestionsRequest;
 use App\Models\Comment;
 use App\Models\User;
 use App\Http\Requests\User\CommentRequest;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -34,20 +35,10 @@ class QuestionController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->tag_category_id === '0') {
-            $questions = $this->question->all();
-        } elseif (!is_null($request->tag_category_id)) {
-            $questions = $this->question->where('tag_category_id', $this->tag->where('name', $request->tag_category_id)->pluck('id'))->get();
-        } elseif (!is_null($request->search_word)) {
-            $questions = $this->question->where('title', 'like', "%$request->search_word%")->get();
-        } else {
-            $questions = $this->question->all();
-        }
-        $tags = $this->tag->all();
-        $comments = $this->comment->all();
-        $avatar = $this->user->pluck('avatar', 'id');
+        $questions = $this->question->fetchQuestions($request);
+        $tags = $this->tag->fetchAllTags();
         
-        return view('user.question.index', compact('questions', 'tags', 'comments', 'avatar'));
+        return view('user.question.index', compact('questions', 'tags'));
     }
 
     /**
@@ -57,7 +48,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        $tags = $this->tag->pluck('name', 'id');
+        $tags = $this->tag->fetchSelectTags();
         
         return view('user.question.create', compact('tags'));
     }
@@ -65,12 +56,12 @@ class QuestionController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request  $request 
      * @return \Illuminate\Http\Response
      */
     public function store(QuestionsRequest $request)
     {
-        $this->question->create($request->all());
+        $this->question->createQuestion($request);
 
         return redirect()->route('question.index');
     }
@@ -81,20 +72,12 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($question_id)
     {
-        $question = $this->question->find($id);
-        $questionUser = $this->user->find($question->user_id);
-        $tag = $this->tag->find($question->tag_category_id);
-
-        $comments = $this->comment->where('question_id', $question->id)->get();
-        
-        $users = $this->user->all();
-        // foreach ($comments as $comment) {
-        //     $commentUsers .= $this->user->where('id', $comment->user_id)->get();
-        // }
-        
-        return view('user.question.show', compact('question', 'questionUser', 'tag', 'comments', 'users'));
+        $question = $this->question->fetchDetailesQuestion($question_id);
+        $comments = $this->comment->fetchQuestionComments($question_id);
+        // dd($question);
+        return view('user.question.show', compact('question', 'comments'));
     }
 
     /**
@@ -103,9 +86,12 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($question_id)
     {
-        //
+        $question = $this->question->fetchQuestion($question_id);
+        $tags = $this->tag->fetchSelectTags();
+        
+        return view('user.question.edit', compact('question', 'tags'));
     }
 
     /**
@@ -115,9 +101,11 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(QuestionsRequest $request, $question_id)
     {
-        //
+        $this->question->updateQuestion($request, $question_id);
+        
+        return redirect()->route('question.mypage', Auth::id());
     }
 
     /**
@@ -126,20 +114,25 @@ class QuestionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($question_id)
     {
-        //
+        $this->question->find($question_id)->delete();
+
+        return redirect()->route('question.mypage', Auth::id());
     }
 
     public function storeComment(CommentRequest $comment)
     {
-        $this->comment->create($comment->all());
+        $this->comment->createComment($comment);
 
         return redirect()->route('question.show', $comment->question_id);
     }
 
-    public function mypage()
+    public function showMypage($auth_id)
     {
-        return view('user.question.mypage');
+        $questions = $this->question->fetchMyQuestions($auth_id);
+        $user = $this->user->fetchAuthUser($auth_id);
+
+        return view('user.question.mypage', compact('questions', 'user'));
     }
 }
