@@ -93,6 +93,11 @@ class Question extends Model
         return $this->find($question_id)->fill($request->all())->save();
     }
 
+    public function destroyQuestion($question_id)
+    {
+        return $this->find($question_id)->delete();
+    }
+
     public function fetchDetailesQuestion($question_id)
     {
         return $this->with(['tagCategory', 'user'])->find($question_id);

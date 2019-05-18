@@ -116,7 +116,7 @@ class QuestionController extends Controller
      */
     public function destroy($question_id)
     {
-        $this->question->find($question_id)->delete();
+        $this->question->destroyQuestion($question_id);
 
         return redirect()->route('question.mypage', Auth::id());
     }
