@@ -44,7 +44,9 @@
         <img src="{{ $question->avator }}" class="avatar-img"><p>コメントを投稿する</p>
       </div>
       <div class="comment-body {{ $errors->has('comment') ? 'has-error' : '' }}">
-      {!! Form::textarea('comment', '',['class' => 'form-control', 'placeholder' => 'Add your comment...', 'cols' => '50', 'rows' => '10']) !!}
+      {!! Form::textarea('comment', '',
+        ['class' => 'form-control', 'placeholder' => 'Add your comment...', 'cols' => '50', 'rows' => '10']) 
+      !!}
       <span class="help-block">{{ $errors->first('comment') }}</span>
     </div>
     <div class="comment-bottom">

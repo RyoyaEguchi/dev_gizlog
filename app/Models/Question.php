@@ -64,20 +64,20 @@ class Question extends Model
                     ->get();
     }
 
-    public function fetchSearchByTag($request)
+    public function fetchSearchByTag($searchRequest)
     {
         return $this->with('tagCategory')
-                    ->where('tag_category_id', $request->tag_category_id)
+                    ->where('tag_category_id', $searchRequest->tag_category_id)
                     ->with('user')
                     ->withCount('comments')
                     ->get();
     }
 
-    public function fetchSearchByWord($request)
+    public function fetchSearchByWord($searchRequest)
     {
         return $this->join('tag_categories', 'questions.tag_category_id', '=', 'tag_categories.id')
-                    ->where('title', 'like', "%$request->search_word%")
-                    ->orWhere('name', $request->search_word)
+                    ->where('title', 'like', "%$searchRequest->search_word%")
+                    ->orWhere('name', $searchRequest->search_word)
                     ->with(['tagCategory', 'user'])
                     ->withCount('comments')
                     ->get();

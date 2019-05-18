@@ -13,6 +13,7 @@ class CreateQuestionsTable extends Migration
      */
     public function up()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('questions', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
@@ -22,8 +23,8 @@ class CreateQuestionsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('tag_category_id')->references('id')->on('tag_categories');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('tag_category_id')->references('id')->on('tag_categories')->onDelete('cascade');
         });
     }
 
