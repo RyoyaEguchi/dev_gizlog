@@ -17,15 +17,13 @@ class QuestionController extends Controller
     protected $question;
     protected $tag;
     protected $comment;
-    protected $user;
 
-    public function __construct(Question $question, TagCategory $tag, Comment $comment, User $user)
+    public function __construct(Question $question, TagCategory $tag, Comment $comment)
     {
         $this->middleware('auth');
         $this->question = $question; 
         $this->tag = $tag;
         $this->comment = $comment;
-        $this->user = $user;
     }
 
     /**
@@ -76,9 +74,8 @@ class QuestionController extends Controller
     {
         $question = $this->question->fetchDetailesQuestion($questionId);
         $comments = $this->comment->fetchQuestionComments($questionId);
-        $user = $this->user->fetchAuthUser(Auth::id());
         
-        return view('user.question.show', compact('question', 'comments', 'user'));
+        return view('user.question.show', compact('question', 'comments'));
     }
 
     /**
@@ -132,8 +129,7 @@ class QuestionController extends Controller
     public function showMypage($authId)
     {
         $questions = $this->question->fetchMyQuestions($authId);
-        $user = $this->user->fetchAuthUser($authId);
 
-        return view('user.question.mypage', compact('questions', 'user'));
+        return view('user.question.mypage', compact('questions'));
     }
 }
