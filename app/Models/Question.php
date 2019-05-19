@@ -31,9 +31,9 @@ class Question extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function fetchQuestion($question_id)
+    public function fetchQuestion($questionId)
     {
-        return $this->find($question_id);
+        return $this->find($questionId);
     }
 
     public function fetchQuestions($searchRequest)
@@ -56,9 +56,9 @@ class Question extends Model
                     ->get();
     }
 
-    public function fetchMyQuestions($auth_id)
+    public function fetchMyQuestions($authId)
     {
-        return $this->where('user_id', $auth_id)
+        return $this->where('user_id', $authId)
                     ->with('tagCategory')
                     ->withCount('comments')
                     ->get();
@@ -83,9 +83,9 @@ class Question extends Model
                     ->get();
     }
 
-    public function fetchDetailesQuestion($question_id)
+    public function fetchDetailesQuestion($questionId)
     {
-        return $this->with(['tagCategory', 'user'])->find($question_id);
+        return $this->with(['tagCategory', 'user'])->find($questionId);
         
     }
 
@@ -94,14 +94,13 @@ class Question extends Model
         return $this->create($request->all());
     }
 
-    public function updateQuestion($request, $question_id)
+    public function updateQuestion($request, $questionId)
     {
-        return $this->find($question_id)->fill($request->all())->save();
+        return $this->find($questionId)->fill($request->all())->save();
     }
 
-    public function destroyQuestion($question_id)
+    public function destroyQuestion($questionId)
     {
-        return $this->find($question_id)->delete();
+        return $this->find($questionId)->delete();
     }
 }
-

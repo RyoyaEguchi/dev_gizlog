@@ -56,9 +56,9 @@ class User extends Authenticatable
         return $this->firstOrNew(['user_info_id' => $userInfoId]);
     }
 
-    public function fetchAuthUser($auth_id)
+    public function fetchAuthUser($authId)
     {
-        return $this->find($auth_id);
+        return $this->find($authId);
     }
     
     public function saveUserInfos($users, $slackUserInfos)
@@ -78,4 +78,3 @@ class User extends Authenticatable
         });
     }
 }
-

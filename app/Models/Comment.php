@@ -28,8 +28,8 @@ class Comment extends Model
         $this->create($request->all());
     }
 
-    public function fetchQuestionComments($id)
+    public function fetchQuestionComments($questionId)
     {
-        return $this->where('question_id', $id)->with('user')->get();
+        return $this->where('question_id', $questionId)->with('user')->get();
     }
 }
