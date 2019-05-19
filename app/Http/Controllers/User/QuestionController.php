@@ -76,8 +76,9 @@ class QuestionController extends Controller
     {
         $question = $this->question->fetchDetailesQuestion($questionId);
         $comments = $this->comment->fetchQuestionComments($questionId);
+        $user = $this->user->fetchAuthUser(Auth::id());
         
-        return view('user.question.show', compact('question', 'comments'));
+        return view('user.question.show', compact('question', 'comments', 'user'));
     }
 
     /**
@@ -125,7 +126,7 @@ class QuestionController extends Controller
     {
         $this->comment->createComment($request);
 
-        return redirect()->route('question.show', $request->questionId);
+        return redirect()->route('question.show', $request->question_id);
     }
 
     public function showMypage($authId)

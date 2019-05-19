@@ -41,7 +41,7 @@
       {!! Form::hidden('user_id', Auth::id()) !!}
       {!! Form::hidden('question_id', $question->id) !!}
       <div class="comment-title">
-        <img src="{{ $question->avator }}" class="avatar-img"><p>コメントを投稿する</p>
+        <img src="{{ $user->avatar }}" class="avatar-img"><p>コメントを投稿する</p>
       </div>
       <div class="comment-body {{ $errors->has('comment') ? 'has-error' : '' }}">
       {!! Form::textarea('comment', '',
