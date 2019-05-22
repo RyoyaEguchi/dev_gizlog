@@ -55,11 +55,6 @@ class User extends Authenticatable
     {
         return $this->firstOrNew(['user_info_id' => $userInfoId]);
     }
-
-    public function fetchAuthUser($authId)
-    {
-        return $this->find($authId);
-    }
     
     public function saveUserInfos($users, $slackUserInfos)
     {
