@@ -19,7 +19,7 @@
       @foreach ($tags as $tag)
         <div class="btn {{ $tag->name }}" id="{{ $tag->id }}">{{ $tag->name }}</div>
       @endforeach
-      <input id="category-val" name="tag_category_id" type="hidden" value="">
+      <input id="category-val" name="tag_category_id" type="hidden" value="{{ $searchRequest->tag_category_id }}">
     </div>
   </form>
   <div class="content-wrapper table-responsive">

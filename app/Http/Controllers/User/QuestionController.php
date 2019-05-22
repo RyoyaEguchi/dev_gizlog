@@ -36,7 +36,7 @@ class QuestionController extends Controller
         $questions = $this->question->fetchQuestions($searchRequest);
         $tags = $this->tag->fetchAllTags();
         
-        return view('user.question.index', compact('questions', 'tags'));
+        return view('user.question.index', compact('questions', 'tags', 'searchRequest'));
     }
 
     /**
@@ -121,7 +121,7 @@ class QuestionController extends Controller
 
     public function storeComment(CommentRequest $request)
     {
-        $this->comment->createComment($request);
+        $this->comment->createComment($request->all());
 
         return redirect()->route('question.show', $request->question_id);
     }

@@ -38,15 +38,26 @@ class Question extends Model
 
     public function fetchQuestions($searchRequest)
     {
-        if ($searchRequest->tag_category_id === '0') {
-            return $this->fetchAllQuestions();
-        } elseif (!is_null($searchRequest->tag_category_id)) {
+        if (!empty($searchRequest->search_word)) {
+            if ($searchRequest->tag_category_id === '0') {
+                return $this->fetchSearchByWord($searchRequest);
+            } else {
+                return $this->fetchSearchByTagAndWord($searchRequest);
+            }
+        } elseif ($searchRequest->tag_category_id !== '0') {
             return $this->fetchSearchByTag($searchRequest);
-        } elseif (!is_null($searchRequest->search_word)) {
-            return $this->fetchSearchByWord($searchRequest);
         } else {
             return $this->fetchAllQuestions();
         }
+    }
+
+    public function fetchSearchByTagAndWord($searchRequest)
+    {
+        return $this->with(['tagCategory', 'user'])
+                    ->where('tag_category_id', $searchRequest->tag_category_id)
+                    ->where('title', 'like', "%$searchRequest->search_word%")
+                    ->withCount('comments')
+                    ->get();
     }
 
     public function fetchAllQuestions()

@@ -25,7 +25,7 @@ class Comment extends Model
 
     public function createComment($request)
     {
-        $this->create($request->all());
+        $this->create($request);
     }
 
     public function fetchQuestionComments($questionId)
