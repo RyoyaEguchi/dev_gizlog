@@ -59,7 +59,7 @@ class QuestionController extends Controller
      */
     public function store(QuestionsRequest $request)
     {
-        $this->question->createQuestion($request);
+        $this->question->createQuestion($request->all());
 
         return redirect()->route('question.index');
     }
@@ -101,7 +101,7 @@ class QuestionController extends Controller
      */
     public function update(QuestionsRequest $request, $questionId)
     {
-        $this->question->updateQuestion($request, $questionId);
+        $this->question->updateQuestion($request->all(), $questionId);
         
         return redirect()->route('question.mypage', Auth::id());
     }

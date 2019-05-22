@@ -102,12 +102,12 @@ class Question extends Model
 
     public function createQuestion($request)
     {
-        return $this->create($request->all());
+        return $this->create($request);
     }
 
     public function updateQuestion($request, $questionId)
     {
-        return $this->find($questionId)->fill($request->all())->save();
+        return $this->find($questionId)->fill($request)->save();
     }
 
     public function destroyQuestion($questionId)
