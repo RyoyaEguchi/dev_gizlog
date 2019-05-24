@@ -38,14 +38,14 @@ class Question extends Model
 
     public function fetchQuestions($searchRequest)
     {
-        if (!empty($searchRequest->search_word)) {
-            if ($searchRequest->tag_category_id === '0') {
-                return $this->fetchSearchByWord($searchRequest);
-            } else {
+        if (!empty($searchRequest->tag_category_id)) {
+            if (isset($searchRequest->search_word)) {
                 return $this->fetchSearchByTagAndWord($searchRequest);
+            } else {
+                return $this->fetchSearchByTag($searchRequest);
             }
-        } elseif ($searchRequest->tag_category_id !== '0') {
-            return $this->fetchSearchByTag($searchRequest);
+        } elseif (isset($searchRequest->search_word)) {
+            return $this->fetchSearchByWord($searchRequest);
         } else {
             return $this->fetchAllQuestions();
         }
@@ -53,9 +53,9 @@ class Question extends Model
 
     public function fetchSearchByTagAndWord($searchRequest)
     {
-        return $this->with(['tagCategory', 'user'])
-                    ->where('tag_category_id', $searchRequest->tag_category_id)
+        return $this->where('tag_category_id', $searchRequest->tag_category_id)
                     ->where('title', 'like', "%$searchRequest->search_word%")
+                    ->with(['tagCategory', 'user'])
                     ->withCount('comments')
                     ->get();
     }
@@ -77,8 +77,9 @@ class Question extends Model
 
     public function fetchSearchByTag($searchRequest)
     {
-        return $this->with('tagCategory')
-                    ->where('tag_category_id', $searchRequest->tag_category_id)
+        return $this->whereHas('tagCategory', function($query)use($searchRequest) {
+                    $query->where('id', $searchRequest->tag_category_id);
+                })
                     ->with('user')
                     ->withCount('comments')
                     ->get();
